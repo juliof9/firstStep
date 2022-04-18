@@ -1,5 +1,5 @@
 //Declaramos variable que contiene la distancia del viaje en millas
-const l = 30;
+const l = 15;
 
 //Definimos el monto
 const monto = 20;
@@ -12,27 +12,30 @@ const typeCars = ["UberX", "UberXL", "UberPlus", "UberBlack", "UberSUV"];
 
 //Como su nombre lo dice se crea para crear ciertas validaciones 
 validaciones(l, tarifas);
-
+//Funcion que realiza todos los calculas necesarios
 function fancyRide (millas, tarifas) {
+    let diferencias = [];
+    let contador = 0;
     //Recorremos el arreglo para realizar las multiplicaciones
     for (let i = 0; i < tarifas.length; i++) {
 
         const element = tarifas[i] * millas;
-        const next = tarifas[i+1] * millas;
 
-        if (element <= monto && next > monto) {
-            const answer = element;
-            const indice = i;
+        diferencias.push(element);
+    }
 
-            console.log("Con un costo de:", answer, "$ los carros disponibles que puede se pueden tomar (de menos lujoso a mas) son: ");
+    for (let i = 0; i < diferencias.length; i++) {
+        const resultado = monto - diferencias[i];
 
-            printAllCars(indice);
-
-            return answer;
+        if (resultado > 0) {
+            contador++;
         }
     }
-}
 
+    console.log("Por un monto de:", diferencias[contador-1] , "$ lo carros que puede tomar (de mayor a menor lujo) son:")
+    printAllCars(contador-1);
+}
+//Funcion hecha para realizar todas las validaciones posibles
 function validaciones (millas, tarifas){
 
     let bandera = false;
